@@ -1,13 +1,14 @@
 const Article = require('./../articleModel');
+const catchAsync = require('./../catchAsync');
 
-exports.getArticle = async (req, res) => {
+exports.getArticle = catchAsync(async (req, res) => {
     const articleName = req.params.name;
     const articleInfo = await Article.findOne({ articleName: articleName });
 
     res.status(200).json(articleInfo)
-};
+});
 
-exports.upvotes = async(req, res) => {
+exports.upvotes = catchAsync(async(req, res) => {
     const articleName = req.params.name;
     const articleInfo = await Article.findOne({ articleName: articleName });
 
@@ -19,9 +20,9 @@ exports.upvotes = async(req, res) => {
 
     const updatedArticleInfo = await Article.findOne({ articleName: articleName });
     res.status(200).json(updatedArticleInfo);
-};
+});
 
-exports.addComments = async(req, res) => {
+exports.addComments = catchAsync(async(req, res) => {
     const { userName, commentText } = req.body;
     const articleName = req.params.name;
 
@@ -34,4 +35,4 @@ exports.addComments = async(req, res) => {
     const updatedArticleInfo = await Article.findOne({ articleName: articleName });
 
     res.status(200).json(updatedArticleInfo)
-};
+});
